@@ -1,0 +1,36 @@
+Writing text to a new file
+First, let's create a new text file and write something into it. Create a new project (a console application) and name it TextFiles. The .NET framework provides the StreamWriter class for us which is used to write into text files.
+
+Now, go ahead and add using System.IO into the source code. Next, we'll create a using block and create a new StreamWriter instance inside. As we already know from previous lessons, using will automatically close the file once the reading/writing is finished. We'll specify the path to our file in the constructor:
+
+using (StreamWriter sw = new StreamWriter(@"file.txt"))
+{
+}
+Our StreamWriter now points to the appropriate file. We write a new line in text files using the WriteLine() method. Once we're done writing, we'll have to call the Flush() method, which takes care of emptying the buffer. We won't have to deal with any of that, all we have to remember is that any written lines may remain in the buffer memory for a while, so we force to write them using the Flush() method.
+
+At this point, the code looks something like this:
+
+using (StreamWriter sw = new StreamWriter(@"file.txt"))
+{
+    sw.WriteLine("The first line");
+    sw.WriteLine("This text is on the second line");
+    sw.WriteLine("And the third one.");
+    sw.Flush();
+}
+Once we run it, a file named file.txt will be created in our project folder, specifically, in the bin/debug folder. We have already gone over how to handle file path and writing privileges in C# .NET correctly, so we won't deal with any of that here so as to keep the code simple. As you can see, the file now exists and contains the text we designated:
+
+Writing to text files in C# .NET
+Appending text to an existing file
+If the file doesn't exist, the code above will create it. If it does exist, it will be overwritten. This behavior can be altered by specifying the second parameter in the StreamWriter's constructor. If we set it to true, it'll append text rather than overwrite it. We add a new line to an existing file like this:
+
+using (StreamWriter sw = new StreamWriter(@"file.txt", true))
+{
+    sw.WriteLine("The appended line");
+    sw.Flush();
+}
+Another parameter that may be passed is the encoding, but UTF-8 is default, which should suit us in most cases.
+
+Reading an existing file
+The only thing left for us to learn is how to read a file. It isn't any more complicated than writing. As usual, there is a .NET framework class for it - StreamReader. It works pretty much like StreamWriter, but instead of the WriteLine() method we use ReadLine() which returns a line of text from the file and moves to the next line. With this in mind, we'll call it in a while loop. The condition to avoid reading beyond the file may seem a little tricky, however, all we're doing is checking whether the line has been assigned to the variable.
+
+The code to print the file contents to the console would look like this:
